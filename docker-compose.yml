@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  php-fpm:
+    build:
+      context: ./.docker/fpm-php
+      dockerfile: dockerfile
+    volumes:
+      - ./:/var/www
+    ports:
+      - "9000:9000"
+    environment:
+      - APP_DEBUG=true
+      - APP_ENV=local
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=web24api
+      - DB_USERNAME=piotr
+      - DB_PASSWORD=secret
+    depends_on:
+      - mysql
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www
+      - ./.docker/nginx/conf.d/:/etc/nginx/conf.d/
+    depends_on:
+      - php-fpm
+
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=web24api
+      - MYSQL_USER=piotr
+      - MYSQL_PASSWORD=secret
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
