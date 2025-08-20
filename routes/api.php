@@ -1,9 +1,15 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\CompanyController;
+use App\Http\Controllers\Api\V1\EmployeeController;
 use Illuminate\Support\Facades\Route;
 
-//TODO: ->middleware('auth:sanctum');
 Route::prefix('v1')->group(function () {
-    Route::apiResource('companies', App\Http\Controllers\Api\V1\CompanyController::class);
-    Route::apiResource('employees', App\Http\Controllers\Api\V1\EmployeeController::class);
+    Route::post('/auth/login', [AuthController::class, 'login']);
+});
+
+Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
+    Route::apiResource('companies', CompanyController::class);
+    Route::apiResource('employees', EmployeeController::class);
 });
