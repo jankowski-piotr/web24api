@@ -2,18 +2,18 @@
 
 namespace App\Repositories\Interfaces;
 
-use Illuminate\Database\Eloquent\Collection;
 use App\Models\Company;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-interface CompanyRepositoryInterface
+interface CompanyRepositoryInterface extends BaseRepositoryInterface
 {
-    public function all(): Collection;
+    public function allWithAddressesPaginated(int $perPage = 10): LengthAwarePaginator;
 
     public function find(int $id): ?Company;
+
+    public function findWithAddress(int $id): ?Company;
 
     public function create(array $data): Company;
 
     public function update(int $id, array $data): ?Company;
-
-    public function delete(int $id): bool;
 }

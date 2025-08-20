@@ -30,7 +30,7 @@ class EmployeeController extends Controller
     // GET /api/v1/employees/{id}
     public function show(int $id): EmployeeResource
     {
-        $employee = $this->employeeRepository->find($id);
+        $employee = $this->employeeRepository->findWithAddress($id);
         return new EmployeeResource($employee);
     }
 

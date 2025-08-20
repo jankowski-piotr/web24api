@@ -20,8 +20,8 @@ return new class extends Migration
     {
         Schema::create(self::TABLE_COMPANIES, function (Blueprint $table) {
             $table->id();
-            $table->string(self::ATTR_NAME, 100);
-            $table->string(self::ATTR_TAX_NUMBER, 13);
+            $table->string(self::ATTR_NAME, 100)->unique();
+            $table->string(self::ATTR_TAX_NUMBER, 13)->unique();
             $table->foreignId(self::ATTR_ADDRESS_ID)
                 ->constrained(self::TABLE_ADDRESSES)
                 ->cascadeOnDelete();

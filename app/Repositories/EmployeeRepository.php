@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use \Log;
 use App\Models\Address;
 use App\Models\Employee;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
@@ -10,6 +9,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class EmployeeRepository implements EmployeeRepositoryInterface
 {
@@ -29,6 +29,12 @@ class EmployeeRepository implements EmployeeRepositoryInterface
         return $this->model->findOrFail($id);
     }
 
+    public function findWithAddress(int $id): ?Employee
+    {
+        return $this->model->with('address')->findOrFail($id);
+    }
+
+
     public function create(array $data): Employee
     {
         try {
@@ -44,7 +50,7 @@ class EmployeeRepository implements EmployeeRepositoryInterface
             return $employee;
         } catch (\Exception $e) {
             DB::rollBack();
-            \Log::error('Employee creation failed: ' . $e->getMessage());
+            Log::error('Employee creation failed: ' . $e->getMessage());
             throw $e;
         }
     }
@@ -58,13 +64,14 @@ class EmployeeRepository implements EmployeeRepositoryInterface
             $employee = $this->model->findOrFail($id);
 
             $employee->address()->associate($address);
+            $employee->fill(Arr::except($data, ['address']));
             $employee->update();
 
             DB::commit();
             return $employee;
         } catch (\Exception $e) {
             DB::rollBack();
-            \Log::error('Employee update failed: ' . $e->getMessage());
+            Log::error('Employee update failed: ' . $e->getMessage());
             throw $e;
         }
     }
