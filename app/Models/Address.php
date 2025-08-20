@@ -7,4 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Address extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'street',
+        'city',
+        'country_code',
+        'postal_code',
+    ];
 }

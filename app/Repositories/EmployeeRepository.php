@@ -2,9 +2,14 @@
 
 namespace App\Repositories;
 
+use \Log;
+use App\Models\Address;
 use App\Models\Employee;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeRepository implements EmployeeRepositoryInterface
 {
@@ -14,6 +19,10 @@ class EmployeeRepository implements EmployeeRepositoryInterface
     {
         return $this->model->all();
     }
+    public function allWithAddressesPaginated(int $perPage = 10): LengthAwarePaginator
+    {
+        return $this->model->with('address')->paginate($perPage);
+    }
 
     public function find($id): ?Employee
     {
@@ -22,19 +31,47 @@ class EmployeeRepository implements EmployeeRepositoryInterface
 
     public function create(array $data): Employee
     {
-        return $this->model->create($data);
+        try {
+            DB::beginTransaction();
+
+            $address = Address::firstOrCreate($data['address']);
+            $employee = new Employee(Arr::except($data, ['address']));
+
+            $employee->address()->associate($address);
+            $employee->save();
+
+            DB::commit();
+            return $employee;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error('Employee creation failed: ' . $e->getMessage());
+            throw $e;
+        }
     }
 
     public function update($id, array $data): ?Employee
     {
-        $user = $this->model->findOrFail($id);
-        $user->update($data);
-        return $user;
+        try {
+            DB::beginTransaction();
+
+            $address = Address::firstOrCreate($data['address']);
+            $employee = $this->model->findOrFail($id);
+
+            $employee->address()->associate($address);
+            $employee->update();
+
+            DB::commit();
+            return $employee;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error('Employee update failed: ' . $e->getMessage());
+            throw $e;
+        }
     }
 
     public function delete($id): bool
     {
-        $user = $this->model->findOrFail($id);
-        return $user->delete();
+        $employee = $this->model->findOrFail($id);
+        return $employee->delete();
     }
 }

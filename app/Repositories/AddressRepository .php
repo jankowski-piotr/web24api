@@ -4,11 +4,16 @@ namespace App\Repositories;
 
 use App\Models\Address;
 use App\Repositories\Interfaces\AddressRepositoryInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
 class AddressRepository implements AddressRepositoryInterface
 {
     public function __construct(protected Address $model) {}
+
+    public function allPaginate(int $perPage = 10): LengthAwarePaginator {
+        return $this->model->paginate($perPage);
+     }
 
     public function all(): Collection
     {

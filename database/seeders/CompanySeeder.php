@@ -11,7 +11,7 @@ class CompanySeeder extends Seeder
     public function run(): void
     {
         $addresses = Address::factory()
-            ->count(5)
+            ->count(100)
             ->create();
 
         foreach ($addresses as $address) {

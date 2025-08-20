@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Interfaces;
 
-use Illuminate\Database\Eloquent\Collection;
 use App\Models\Address;
+use Illuminate\Database\Eloquent\Collection;
 
 interface AddressRepositoryInterface
 {
