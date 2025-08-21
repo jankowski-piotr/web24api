@@ -9,39 +9,181 @@ use App\Http\Resources\BaseCollection;
 use App\Http\Resources\EmployeeResource;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use Illuminate\Http\JsonResponse;
+use OpenApi\Attributes as OA;
 
+#[OA\Tag(
+    name: "Employees",
+    description: "API Endpoints for Employees"
+)]
 class EmployeeController extends Controller
 {
     public function __construct(private EmployeeRepositoryInterface $employeeRepository) {}
 
-    // GET /api/v1/employees
+    #[OA\Get(
+        path: "/api/v1/employees",
+        summary: "Get a list of employees",
+        tags: ["Employees"],
+        security: [["sanctum" => []]],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "OK",
+                content: new OA\JsonContent()
+            ),
+            new OA\Response(
+                response: 401,
+                description: "Unauthenticated"
+            )
+        ]
+    )]
     public function index(): BaseCollection
     {
         $paginator = $this->employeeRepository->allWithAddressesPaginated();
         return new BaseCollection($paginator);
     }
-    // POST /api/v1/employees
+
+    #[OA\Post(
+        path: "/api/v1/employees",
+        summary: "Create a new employee",
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                ref: "#/components/schemas/StoreEmployeeRequest"
+            )
+        ),
+        tags: ["Employees"],
+        security: [["sanctum" => []]],
+        responses: [
+            new OA\Response(
+                response: 201,
+                description: "Created",
+                content: new OA\JsonContent()
+            ),
+            new OA\Response(
+                response: 401,
+                description: "Unauthenticated"
+            ),
+            new OA\Response(
+                response: 422,
+                description: "Validation failed"
+            )
+        ]
+    )]
     public function store(StoreEmployeeRequest $request): EmployeeResource
     {
         $employee = $this->employeeRepository->create($request->validated());
         return new EmployeeResource($employee);
     }
 
-    // GET /api/v1/employees/{id}
+    #[OA\Get(
+        path: "/api/v1/employees/{id}",
+        summary: "Get a single employee by ID",
+        tags: ["Employees"],
+        parameters: [
+            new OA\Parameter(
+                name: "id",
+                description: "Employee ID",
+                in: "path",
+                required: true,
+                schema: new OA\Schema(type: "integer")
+            )
+        ],
+        security: [["sanctum" => []]],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "OK",
+                content: new OA\JsonContent()
+            ),
+            new OA\Response(
+                response: 401,
+                description: "Unauthenticated"
+            ),
+            new OA\Response(
+                response: 404,
+                description: "Not Found"
+            )
+        ]
+    )]
     public function show(int $id): EmployeeResource
     {
         $employee = $this->employeeRepository->findWithAddress($id);
         return new EmployeeResource($employee);
     }
 
-    // PUT / PATCH /api/v1/employees/{id}
+    #[OA\Put(
+        path: "/api/v1/employees/{id}",
+        summary: "Update an existing employee",
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(ref: "#/components/schemas/UpdateEmployeeRequest")
+        ),
+        tags: ["Employees"],
+        parameters: [
+            new OA\Parameter(
+                name: "id",
+                description: "Employee ID",
+                in: "path",
+                required: true,
+                schema: new OA\Schema(type: "integer")
+            )
+        ],
+        security: [["sanctum" => []]],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "OK",
+                content: new OA\JsonContent()
+            ),
+            new OA\Response(
+                response: 401,
+                description: "Unauthenticated"
+            ),
+            new OA\Response(
+                response: 404,
+                description: "Not Found"
+            ),
+            new OA\Response(
+                response: 422,
+                description: "Validation failed"
+            )
+        ]
+    )]
     public function update(UpdateEmployeeRequest $request, int $id): EmployeeResource
     {
         $employee = $this->employeeRepository->update($id, $request->validated());
         return new EmployeeResource($employee);
     }
 
-    // DELETE /api/v1/employees/{id}
+    #[OA\Delete(
+        path: "/api/v1/employees/{id}",
+        summary: "Delete an employee",
+        tags: ["Employees"],
+        parameters: [
+            new OA\Parameter(
+                name: "id",
+                description: "Employee ID",
+                in: "path",
+                required: true,
+                schema: new OA\Schema(type: "integer")
+            )
+        ],
+        security: [["sanctum" => []]],
+        responses: [
+            new OA\Response(
+                response: 204,
+                description: "No Content"
+            ),
+            new OA\Response(
+                response: 401,
+                description: "Unauthenticated"
+            ),
+            new OA\Response(
+                response: 404,
+                description: "Not Found"
+            )
+        ]
+    )]
     public function destroy(int $id): JsonResponse
     {
         $this->employeeRepository->delete($id);
