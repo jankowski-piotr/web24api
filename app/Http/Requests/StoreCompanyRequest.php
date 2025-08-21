@@ -2,6 +2,18 @@
 
 namespace App\Http\Requests;
 
+use OpenApi\Attributes as OA;
+
+#[OA\Schema(
+    schema: "StoreCompanyRequest",
+    title: "Store Company Request",
+    required: ["name", "tax_number", "address"],
+    properties: [
+        new OA\Property(property: "name", type: "string", maxLength: 100),
+        new OA\Property(property: "tax_number", type: "string", description: "1 to 13 digits", minLength: 1, maxLength: 13),
+        new OA\Property(property: "address", type: "object", description: "A valid address object"),
+    ]
+)]
 class StoreCompanyRequest extends CompanyRequest
 {
     /**
