@@ -42,7 +42,7 @@ class EmployeeRepository implements EmployeeRepositoryInterface
             $employee->companies()->sync($data['company_ids'] ?? []);
 
             DB::commit();
-            return $employee->fresh('companies.address');
+            return $employee->load('companies.address');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Employee creation failed: ' . $e->getMessage());

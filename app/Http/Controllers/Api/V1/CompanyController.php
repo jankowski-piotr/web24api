@@ -91,7 +91,7 @@ class CompanyController extends Controller
         security: [["Token-Based Authentication" => []]],
         responses: [
             new OA\Response(
-                response: 200,
+                response: 201,
                 description: "OK",
                 content: new OA\JsonContent(ref: CompanyResource::class)
             ),
