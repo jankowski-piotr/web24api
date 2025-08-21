@@ -4,7 +4,20 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use OpenApi\Attributes as OA;
 
+#[OA\Schema(
+    schema: 'AddressResource',
+    properties: [
+        new OA\Property(property: 'street', type: 'string'),
+        new OA\Property(property: 'city', type: 'string'),
+        new OA\Property(property: 'country_code', type: 'string'),
+        new OA\Property(property: 'postal_code', type: 'string'),
+        new OA\Property(property: 'created_at', type: 'string', format: 'date-time'),
+        new OA\Property(property: 'updated_at', type: 'string', format: 'date-time'),
+    ],
+    type: 'object'
+)]
 class AddressResource extends JsonResource
 {
     /**

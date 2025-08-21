@@ -12,6 +12,35 @@
         }
     ],
     "paths": {
+        "/api/v1/login": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login and get authentication token",
+                "operationId": "3dbb325e0dab1fa294c929506bf9c85a",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "Token-Based Authentication": []
+                    }
+                ]
+            }
+        },
         "/api/v1/companies": {
             "get": {
                 "tags": [
@@ -24,7 +53,9 @@
                         "description": "OK",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "$ref": "#/components/schemas/CompanyResource"
+                                }
                             }
                         }
                     },
@@ -34,7 +65,7 @@
                 },
                 "security": [
                     {
-                        "sanctum": []
+                        "Token-Based Authentication": []
                     }
                 ]
             },
@@ -59,7 +90,9 @@
                         "description": "Created",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "$ref": "#/components/schemas/CompanyResource"
+                                }
                             }
                         }
                     },
@@ -72,7 +105,7 @@
                 },
                 "security": [
                     {
-                        "sanctum": []
+                        "Token-Based Authentication": []
                     }
                 ]
             }
@@ -100,7 +133,9 @@
                         "description": "OK",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "$ref": "#/components/schemas/CompanyResource"
+                                }
                             }
                         }
                     },
@@ -113,7 +148,7 @@
                 },
                 "security": [
                     {
-                        "sanctum": []
+                        "Token-Based Authentication": []
                     }
                 ]
             },
@@ -149,7 +184,9 @@
                         "description": "OK",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "$ref": "#/components/schemas/CompanyResource"
+                                }
                             }
                         }
                     },
@@ -165,7 +202,7 @@
                 },
                 "security": [
                     {
-                        "sanctum": []
+                        "Token-Based Authentication": []
                     }
                 ]
             },
@@ -199,7 +236,7 @@
                 },
                 "security": [
                     {
-                        "sanctum": []
+                        "Token-Based Authentication": []
                     }
                 ]
             }
@@ -216,7 +253,9 @@
                         "description": "OK",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "$ref": "#/components/schemas/EmployeeResource"
+                                }
                             }
                         }
                     },
@@ -226,7 +265,7 @@
                 },
                 "security": [
                     {
-                        "sanctum": []
+                        "Token-Based Authentication": []
                     }
                 ]
             },
@@ -251,7 +290,9 @@
                         "description": "Created",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "$ref": "#/components/schemas/EmployeeResource"
+                                }
                             }
                         }
                     },
@@ -264,7 +305,7 @@
                 },
                 "security": [
                     {
-                        "sanctum": []
+                        "Token-Based Authentication": []
                     }
                 ]
             }
@@ -292,7 +333,9 @@
                         "description": "OK",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "$ref": "#/components/schemas/EmployeeResource"
+                                }
                             }
                         }
                     },
@@ -305,7 +348,7 @@
                 },
                 "security": [
                     {
-                        "sanctum": []
+                        "Token-Based Authentication": []
                     }
                 ]
             },
@@ -341,7 +384,9 @@
                         "description": "OK",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "$ref": "#/components/schemas/EmployeeResource"
+                                }
                             }
                         }
                     },
@@ -357,7 +402,7 @@
                 },
                 "security": [
                     {
-                        "sanctum": []
+                        "Token-Based Authentication": []
                     }
                 ]
             },
@@ -391,7 +436,7 @@
                 },
                 "security": [
                     {
-                        "sanctum": []
+                        "Token-Based Authentication": []
                     }
                 ]
             }
@@ -453,6 +498,14 @@
                     "address": {
                         "description": "A valid address object",
                         "type": "object"
+                    },
+                    "company_ids": {
+                        "description": "A valid company IDs array",
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
                     }
                 },
                 "type": "object"
@@ -511,13 +564,130 @@
                     "address": {
                         "description": "A valid address object",
                         "type": "object"
+                    },
+                    "company_ids": {
+                        "description": "A valid company IDs array",
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "AddressResource": {
+                "properties": {
+                    "street": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "country_code": {
+                        "type": "string"
+                    },
+                    "postal_code": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "AuthResource": {
+                "properties": {
+                    "access_token": {
+                        "description": "The access token used for authentication.",
+                        "type": "string"
+                    },
+                    "token_type": {
+                        "description": "The type of token, typically \"Bearer\".",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "CompanyResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "tax_number": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "$ref": "#/components/schemas/AddressResource"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "employees": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/EmployeeResource"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "EmployeeResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "phone_number": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "$ref": "#/components/schemas/AddressResource"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "companies": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CompanyResource"
+                        }
                     }
                 },
                 "type": "object"
             }
         },
         "securitySchemes": {
-            "sanctum": {
+            "Token-Based Authentication": {
                 "type": "http",
                 "description": "Bearer token authentication via Sanctum",
                 "scheme": "bearer"
@@ -525,6 +695,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Auth",
+            "description": "API Endpoints login and authentication"
+        },
         {
             "name": "Companies",
             "description": "API Endpoints for Companies"

@@ -23,12 +23,12 @@ class EmployeeController extends Controller
         path: "/api/v1/employees",
         summary: "Get a list of employees",
         tags: ["Employees"],
-        security: [["sanctum" => []]],
+        security: [["Token-Based Authentication" => []]],
         responses: [
             new OA\Response(
                 response: 200,
                 description: "OK",
-                content: new OA\JsonContent()
+                content: new OA\JsonContent(ref: EmployeeResource::class)
             ),
             new OA\Response(
                 response: 401,
@@ -52,12 +52,12 @@ class EmployeeController extends Controller
             )
         ),
         tags: ["Employees"],
-        security: [["sanctum" => []]],
+        security: [["Token-Based Authentication" => []]],
         responses: [
             new OA\Response(
                 response: 201,
                 description: "Created",
-                content: new OA\JsonContent()
+                content: new OA\JsonContent(ref: EmployeeResource::class)
             ),
             new OA\Response(
                 response: 401,
@@ -88,12 +88,12 @@ class EmployeeController extends Controller
                 schema: new OA\Schema(type: "integer")
             )
         ],
-        security: [["sanctum" => []]],
+        security: [["Token-Based Authentication" => []]],
         responses: [
             new OA\Response(
                 response: 200,
                 description: "OK",
-                content: new OA\JsonContent()
+                content: new OA\JsonContent(ref: EmployeeResource::class)
             ),
             new OA\Response(
                 response: 401,
@@ -128,12 +128,12 @@ class EmployeeController extends Controller
                 schema: new OA\Schema(type: "integer")
             )
         ],
-        security: [["sanctum" => []]],
+        security: [["Token-Based Authentication" => []]],
         responses: [
             new OA\Response(
                 response: 200,
                 description: "OK",
-                content: new OA\JsonContent()
+                content: new OA\JsonContent(ref: EmployeeResource::class)
             ),
             new OA\Response(
                 response: 401,
@@ -168,7 +168,7 @@ class EmployeeController extends Controller
                 schema: new OA\Schema(type: "integer")
             )
         ],
-        security: [["sanctum" => []]],
+        security: [["Token-Based Authentication" => []]],
         responses: [
             new OA\Response(
                 response: 204,

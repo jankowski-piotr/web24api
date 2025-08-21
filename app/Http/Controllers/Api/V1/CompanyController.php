@@ -23,12 +23,12 @@ class CompanyController extends Controller
         path: "/api/v1/companies",
         summary: "Get a list of companies",
         tags: ["Companies"],
-        security: [["sanctum" => []]],
+        security: [["Token-Based Authentication" => []]],
         responses: [
             new OA\Response(
                 response: 200,
                 description: "OK",
-                content: new OA\JsonContent()
+                content: new OA\JsonContent(ref: CompanyResource::class)
             ),
             new OA\Response(
                 response: 401,
@@ -52,12 +52,12 @@ class CompanyController extends Controller
             )
         ),
         tags: ["Companies"],
-        security: [["sanctum" => []]],
+        security: [["Token-Based Authentication" => []]],
         responses: [
             new OA\Response(
                 response: 201,
                 description: "Created",
-                content: new OA\JsonContent()
+                content: new OA\JsonContent(ref: CompanyResource::class)
             ),
             new OA\Response(
                 response: 401,
@@ -88,12 +88,12 @@ class CompanyController extends Controller
                 schema: new OA\Schema(type: "integer")
             )
         ],
-        security: [["sanctum" => []]],
+        security: [["Token-Based Authentication" => []]],
         responses: [
             new OA\Response(
                 response: 200,
                 description: "OK",
-                content: new OA\JsonContent()
+                content: new OA\JsonContent(ref: CompanyResource::class)
             ),
             new OA\Response(
                 response: 401,
@@ -128,12 +128,12 @@ class CompanyController extends Controller
                 schema: new OA\Schema(type: "integer")
             )
         ],
-        security: [["sanctum" => []]],
+        security: [["Token-Based Authentication" => []]],
         responses: [
             new OA\Response(
                 response: 200,
                 description: "OK",
-                content: new OA\JsonContent()
+                content: new OA\JsonContent(ref: CompanyResource::class)
             ),
             new OA\Response(
                 response: 401,
@@ -168,7 +168,7 @@ class CompanyController extends Controller
                 schema: new OA\Schema(type: "integer")
             )
         ],
-        security: [["sanctum" => []]],
+        security: [["Token-Based Authentication" => []]],
         responses: [
             new OA\Response(
                 response: 204,

@@ -4,7 +4,27 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use OpenApi\Attributes as OA;
 
+#[OA\Schema(
+    schema: 'EmployeeResource',
+    properties: [
+        new OA\Property(property: 'id', type: 'integer', readOnly: true),
+        new OA\Property(property: 'name', type: 'string'),
+        new OA\Property(property: 'last_name', type: 'string'),
+        new OA\Property(property: 'email', type: 'string', format: 'email'),
+        new OA\Property(property: 'phone_number', type: 'string'),
+        new OA\Property(property: 'address', ref: '#/components/schemas/AddressResource'),
+        new OA\Property(property: 'created_at', type: 'string', format: 'date-time'),
+        new OA\Property(property: 'updated_at', type: 'string', format: 'date-time'),
+        new OA\Property(
+            property: 'companies',
+            type: 'array',
+            items: new OA\Items(ref: '#/components/schemas/CompanyResource')
+        ),
+    ],
+    type: 'object'
+)]
 class EmployeeResource extends JsonResource
 {
     /**

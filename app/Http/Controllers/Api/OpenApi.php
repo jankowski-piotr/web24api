@@ -14,7 +14,7 @@ use OpenApi\Attributes as OA;
     description: "Development API Server"
 )]
 #[OA\SecurityScheme(
-    securityScheme: "sanctum",
+    securityScheme: "Token-Based Authentication",
     type: "http",
     scheme: "bearer",
     description: "Bearer token authentication via Sanctum"
