@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use \Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 class Address extends Model
 {
     use HasFactory;
@@ -14,4 +16,14 @@ class Address extends Model
         'country_code',
         'postal_code',
     ];
+
+    public function companies(): HasMany
+    {
+        return $this->hasMany(Company::class);
+    }
+
+    public function employees(): HasMany
+    {
+        return $this->hasMany(Employee::class);
+    }
 }

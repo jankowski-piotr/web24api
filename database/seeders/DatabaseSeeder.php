@@ -4,8 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Seeders\EmployeeCompanySeeder;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CompanySeeder::class,
             EmployeeSeeder::class,
+            EmployeeCompanySeeder::class,
         ]);
     }
 }

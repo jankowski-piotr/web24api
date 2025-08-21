@@ -38,15 +38,17 @@ class UpdateEmployeeRequest extends EmployeeRequest
     {
         $employee = $this->route('employee');
 
-        $rules = [
+        return [
+            ...parent::rules(),
             'email' => [
                 'required',
                 'string',
                 'email',
                 'max:255',
-                Rule::unique(Employee::class, 'email'),
+                Rule::unique(Employee::class, 'email')->ignore($employee),
             ],
+            'company_ids' => ['nullable', 'array'],
+            'company_ids.*' => ['integer', 'exists:companies,id'],
         ];
-        return array_merge(parent::rules(), $rules);
     }
 }

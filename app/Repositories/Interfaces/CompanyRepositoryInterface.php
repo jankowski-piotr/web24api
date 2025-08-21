@@ -7,11 +7,9 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface CompanyRepositoryInterface extends BaseRepositoryInterface
 {
-    public function allWithAddressesPaginated(int $perPage = 10): LengthAwarePaginator;
+    public function allPaginated(int $perPage = 10): LengthAwarePaginator;
 
     public function find(int $id): ?Company;
-
-    public function findWithAddress(int $id): ?Company;
 
     public function create(array $data): Company;
 

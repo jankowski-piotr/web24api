@@ -38,7 +38,7 @@ class EmployeeController extends Controller
     )]
     public function index(): BaseCollection
     {
-        $paginator = $this->employeeRepository->allWithAddressesPaginated();
+        $paginator = $this->employeeRepository->allPaginated();
         return new BaseCollection($paginator);
     }
 
@@ -107,7 +107,7 @@ class EmployeeController extends Controller
     )]
     public function show(int $id): EmployeeResource
     {
-        $employee = $this->employeeRepository->findWithAddress($id);
+        $employee = $this->employeeRepository->find($id);
         return new EmployeeResource($employee);
     }
 

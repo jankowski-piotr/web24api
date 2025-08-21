@@ -38,7 +38,7 @@ class CompanyController extends Controller
     )]
     public function index(): BaseCollection
     {
-        $paginator = $this->companyRepository->allWithAddressesPaginated();
+        $paginator = $this->companyRepository->allPaginated();
         return new BaseCollection($paginator);
     }
 
@@ -107,7 +107,7 @@ class CompanyController extends Controller
     )]
     public function show(int $id): CompanyResource
     {
-        $company = $this->companyRepository->findWithAddress($id);
+        $company = $this->companyRepository->find($id);
         return new CompanyResource($company);
     }
 

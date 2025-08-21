@@ -15,25 +15,18 @@ class CompanyRepository implements CompanyRepositoryInterface
 {
     public function __construct(protected Company $model) {}
 
-
     public function all(): Collection
     {
         return $this->model->all();
     }
-
-    public function allWithAddressesPaginated(int $perPage = 10): LengthAwarePaginator
+    public function allPaginated(int $perPage = 10): LengthAwarePaginator
     {
-        return $this->model->with('address')->paginate($perPage);
+        return $this->model->with('address', 'employees.address')->paginate($perPage);
     }
 
     public function find($id): ?Company
     {
-        return $this->model->findOrFail($id);
-    }
-
-    public function findWithAddress(int $id): ?Company
-    {
-        return $this->model->with('address')->findOrFail($id);
+        return $this->model->with('address', 'employees.address')->findOrFail($id);
     }
 
     public function create(array $data): Company

@@ -35,7 +35,8 @@ class UpdateCompanyRequest extends CompanyRequest
     {
         $company = $this->route('company');
 
-        $rules = [
+        return [
+            ...parent::rules(),
             'name' => [
                 'required',
                 'string',
@@ -49,6 +50,5 @@ class UpdateCompanyRequest extends CompanyRequest
                 Rule::unique(Company::class, 'tax_number')->ignore($company),
             ],
         ];
-        return array_merge(parent::rules(), $rules);
     }
 }

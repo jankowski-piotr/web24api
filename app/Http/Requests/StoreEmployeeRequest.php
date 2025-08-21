@@ -14,6 +14,7 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: "email", type: "string", format: "email", maxLength: 255),
         new OA\Property(property: "phone_number", type: "string", maxLength: 20),
         new OA\Property(property: "address", type: "object", description: "A valid address object"),
+        new OA\Property(property: "company_ids", type: "array", description: "A valid company IDs array"),
     ]
 )]
 class StoreEmployeeRequest extends EmployeeRequest
@@ -33,6 +34,10 @@ class StoreEmployeeRequest extends EmployeeRequest
      */
     public function rules(): array
     {
-        return parent::rules();
+        return [
+            ...parent::rules(),
+            'company_ids' => ['nullable', 'array'],
+            'company_ids.*' => ['integer', 'exists:companies,id'],
+        ];
     }
 }

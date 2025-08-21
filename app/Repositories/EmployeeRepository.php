@@ -19,21 +19,15 @@ class EmployeeRepository implements EmployeeRepositoryInterface
     {
         return $this->model->all();
     }
-    public function allWithAddressesPaginated(int $perPage = 10): LengthAwarePaginator
+    public function allPaginated(int $perPage = 10): LengthAwarePaginator
     {
-        return $this->model->with('address')->paginate($perPage);
+        return $this->model->with('address', 'companies.address')->paginate($perPage);
     }
 
     public function find($id): ?Employee
     {
-        return $this->model->findOrFail($id);
+        return $this->model->with('address', 'companies.address')->findOrFail($id);
     }
-
-    public function findWithAddress(int $id): ?Employee
-    {
-        return $this->model->with('address')->findOrFail($id);
-    }
-
 
     public function create(array $data): Employee
     {
@@ -45,9 +39,10 @@ class EmployeeRepository implements EmployeeRepositoryInterface
 
             $employee->address()->associate($address);
             $employee->save();
+            $employee->companies()->sync($data['company_ids'] ?? []);
 
             DB::commit();
-            return $employee;
+            return $employee->fresh('companies.address');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Employee creation failed: ' . $e->getMessage());
@@ -66,9 +61,10 @@ class EmployeeRepository implements EmployeeRepositoryInterface
             $employee->address()->associate($address);
             $employee->fill(Arr::except($data, ['address']));
             $employee->update();
+            $employee->companies()->sync($data['company_ids'] ?? []);
 
             DB::commit();
-            return $employee;
+            return $employee->fresh('companies.address');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Employee update failed: ' . $e->getMessage());

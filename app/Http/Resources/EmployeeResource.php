@@ -23,6 +23,7 @@ class EmployeeResource extends JsonResource
             'address' => new AddressResource($this->whenLoaded('address')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'companies' => CompanyResource::collection($this->whenLoaded('companies')),
         ];
     }
 }
