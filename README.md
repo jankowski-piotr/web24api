@@ -41,18 +41,15 @@ The following components are required to run the project:
 
 - Edit the .env file to configure your database connection 
 
-        (DB_CONNECTION, DB_DATABASE, DB_USERNAME, DB_PASSWORD).
-
-- Run migrations to create the database tables:
-
-        php artisan migrate
+        DB_CONNECTION, DB_DATABASE, DB_USERNAME, DB_PASSWORD
 
 - Run the development server:
 
-        docer compose up -d
+        docker compose up -d
 
 - Run inside container
 
+        php artisan migrate
         php artisan key:generate
         php artisan migrate
         php artisan db:seed
