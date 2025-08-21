@@ -5,3 +5,8 @@ REST API Utwórz REST API przy użyciu frameworka Laravel / Symfony. Celem aplik
 
 - Firma: nazwa, NIP, adres, miasto, kod pocztow
 - Pracownik: imię, nazwisko, email, numer telefonu(opcjonalne)
+
+
+## Building openAi Swagger
+run 
+    ./vendor/bin/openapi --output public/docs/openapi.json app/Http/Controllers app/Http/Requests app/Http/Resources
