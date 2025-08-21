@@ -1,12 +1,72 @@
-## About Task
-### Original message:
+# Company and Employee Management - REST API
 
-REST API Utwórz REST API przy użyciu frameworka Laravel / Symfony. Celem aplikacji jest umożliwienie przesłania przez użytkownika informacji odnośnie firmy(nazwa, NIP, adres, miasto, kod pocztowy) oraz jej pracowników(imię, nazwisko, email, numer telefonu(opcjonalne)) - wszystkie pola są obowiązkowe poza tym które jest oznaczone jako opcjonalne. Uzupełnij endpointy do pełnego CRUDa dla powyższych dwóch. Zapisz dane w bazie danych. PS. Stosuj znane Ci dobre praktyki wytwarzania oprogramowania oraz korzystaj z repozytorium kodu.
+## Introduction
+This project is a RESTful API built with the Laravel framework, designed to manage company and employee data. The application provides full CRUD operations for both resources (companies, employees) and adheres to modern software development best practices.
 
-- Firma: nazwa, NIP, adres, miasto, kod pocztow
-- Pracownik: imię, nazwisko, email, numer telefonu(opcjonalne)
+## Features
+- Full CRUD operations for companies (name, tax number, address, city, postal code).
+- Full CRUD operations for employees (first name, last name, email, phone number - optional).
+- All data is persisted in a database.
+- Implementation of the Repository pattern.
+- API documentation in OpenAPI format.
+
+## API Documentation (OpenAPI)
+The API specification documentation is available in JSON format at the following address:  
+`public/docs/api/v1/openapi.json`
+
+To update the documentation after making changes to the code, run the following command:
+```bash
+./vendor/bin/openapi --output public/docs/api/v1/openapi.json app/Http/Controllers app/Http/Requests app/Http/Resources
+```
+
+## Requirements
+
+The following components are required to run the project:
+
+- PHP (recommended version 8.2+)
+
+- Composer
+
+- Database (e.g., MySQL, PostgreSQL)
+
+## Installation and Setup
+
+- Clone the repository:
+
+        git clone <URL_REPOSITORIUM>
+
+- Configure environment variables by creating a .env file and generating the application key:
+
+        cp .env.example .env
+
+- Edit the .env file to configure your database connection 
+
+        (DB_CONNECTION, DB_DATABASE, DB_USERNAME, DB_PASSWORD).
+
+- Run migrations to create the database tables:
+
+        php artisan migrate
+
+- Run the development server:
+
+        docer compose up -d
+
+- Run inside container
+
+        php artisan key:generate
+        php artisan migrate
+        php artisan db:seed
+
+    ℹ️ Creates a default user with a Bearer Token via seeding.
+
+        test@example.com
+        password
+
+# Testing
+
+This project includes a suite of tests to ensure the API's functionality. You can run all of the tests using the following command:
+
+        php artisan test
 
 
-## Building openAi Swagger
-run 
-    ./vendor/bin/openapi --output public/docs/openapi.json app/Http/Controllers app/Http/Requests app/Http/Resources
+The base URL for the API is /api/v1. All CRUD endpoints are available from this base URL. You can use tools such as Insomnia/Postman or cURL to interact with the API.
