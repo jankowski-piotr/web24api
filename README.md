@@ -49,7 +49,6 @@ The following components are required to run the project:
 
 - Run inside container
 
-        php artisan migrate
         php artisan key:generate
         php artisan migrate
         php artisan db:seed
