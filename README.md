@@ -41,7 +41,13 @@ The following components are required to run the project:
 
 - Edit the .env file to configure your database connection 
 
-        DB_CONNECTION, DB_DATABASE, DB_USERNAME, DB_PASSWORD
+        DB_CONNECTION=mysql
+        DB_HOST=mysql
+        DB_PORT=3306
+        DB_DATABASE=web24api
+        DB_USERNAME=
+        DB_PASSWORD=
+        MYSQL_ATTR_SSL_CA=
 
 - Run the development server:
 
