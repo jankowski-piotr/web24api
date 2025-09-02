@@ -26,11 +26,13 @@ services:
     image: mysql:8.0
     ports:
       - "3306:3306"
+    command: --default-authentication-plugin=mysql_native_password --skip-ssl
     environment:
       - MYSQL_ROOT_PASSWORD=secret
       - MYSQL_DATABASE=web24api
       - MYSQL_USER=piotr
       - MYSQL_PASSWORD=secret
+      - MYSQL_SSL_MODE=DISABLED
     volumes:
       - mysql_data:/var/lib/mysql
 

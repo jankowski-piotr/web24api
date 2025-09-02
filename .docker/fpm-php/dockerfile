@@ -24,7 +24,8 @@ RUN apt-get install --yes \
     zlib1g-dev \
     iputils-ping \
     zip \
-    libzip-dev
+    libzip-dev \
+    default-mysql-client
 
 # Install PHP extensions
 RUN docker-php-ext-install bcmath \
