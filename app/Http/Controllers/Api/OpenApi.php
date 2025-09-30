@@ -6,11 +6,11 @@ use OpenApi\Attributes as OA;
 
 #[OA\Info(
     version: "1.0.0",
-    title: "Web24 API",
+    title: "ACME API",
     description: "API for managing companies and employees"
 )]
 #[OA\Server(
-    url: "http://web24api.devel/api/v1",
+    url: "http://acmeapi.devel/api/v1",
     description: "Development API Server"
 )]
 #[OA\SecurityScheme(
