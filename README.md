@@ -44,7 +44,7 @@ The following components are required to run the project:
         DB_CONNECTION=mysql
         DB_HOST=mysql
         DB_PORT=3306
-        DB_DATABASE=web24api
+        DB_DATABASE=acmeapi
         DB_USERNAME=
         DB_PASSWORD=
         MYSQL_ATTR_SSL_CA=
